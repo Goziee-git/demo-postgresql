@@ -1,0 +1,29 @@
+services:
+  postgres-db:
+    image: postgres:latest # Use the latest PostgreSQL image
+    container_name: pg-container
+    environment:
+      POSTGRES_DB: prospa        # Name of the database
+      POSTGRES_USER: prospa          # Username to connect to the database
+      POSTGRES_PASSWORD: prospa  # Password for the user
+    ports:
+      - "5432:5432"                  # Expose PostgreSQL on port 5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data # Persist database data
+  
+  padmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_PASSWORD: root
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com 
+    volumes:
+      - pgadmindata:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+
+
+volumes:
+  pgdata:
+  pgadmindata:
